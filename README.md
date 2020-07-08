@@ -5,9 +5,9 @@ The scripts are not published as a finished software but for informational purpo
 Some details, such as where data was downloaded or how filtering was done, are described in the methods section of the main text.
 
 <h4>The scripts assume the installation of the following software:</h4>
-1.	ARGweaver: http://github.com/CshlSiepelLab/argweaver.git 
+1.	ARGweaver: http://github.com/CshlSiepelLab/argweaver.git <br />
 2.	SLiM version 2.3
 
 <h4>Directories:</h4>
-1. Simulations/ Contains all script for simulations.
+1. Simulations/ Contains all script for simulations. <br />
 2. Scripts/ Contains some miscellaneous scripts.
