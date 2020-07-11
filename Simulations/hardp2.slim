@@ -1,0 +1,82 @@
+initialize(){
+  initializeMutationRate(mu);
+  initializeMutationType("m1", 0.5, "f", 0.0);
+  initializeMutationType("m2", 1.0, "f", runif(1,0.75,5));
+  initializeGenomicElementType("g1", m1, 1.0);
+  initializeGenomicElement(g1, 0, 49999);
+  initializeRecombinationRate(rho);
+  defineConstant("gen_num", asInteger(runif(1, 18400, 18450)));
+  defineConstant("popsize1", asInteger(runif(1, 1100, 2000)));
+  defineConstant("popsize2", asInteger(runif(1, 1100, 2000)));
+}
+
+1 late(){
+  sim.readFromPopulationFile("tmp/slim_" + simID + ".txt");
+}
+
+18121 late(){
+  sim.addSubpopSplit("p2", popsize1, p1);
+  sim.addSubpopSplit("p3", popsize2, p1);
+}
+
+18121:18550 late(){
+  if(gen_num==sim.generation){
+    target = sample(p2.genomes, 1);
+    if(run==1){
+      target.addNewDrawnMutation(m2, sample(0:9999,1,F));
+    }else if(run==2){
+      target.addNewDrawnMutation(m2, sample(10000:19999,1,F));
+    }else if(run==3){
+      target.addNewDrawnMutation(m2, sample(20000:29999,1,F));
+    }else if(run==4){
+      target.addNewDrawnMutation(m2, sample(30000:39999,1,F));
+    }else if(run==5){
+      target.addNewDrawnMutation(m2, sample(40000:49999,1,F));
+    }
+    cat("Number of beneficial mutations: " + sim.countOfMutationsOfType(m2) + "\n");
+  }
+
+  if(sim.generation>=gen_num){
+    mut = sim.mutationsOfType(m2);
+    cat("Generation " + sim.generation + ": " + sim.mutationFrequencies(p2,mut) + "\n");
+    if(sim.countOfMutationsOfType(m2) == 0){
+      fixed = (sum(sim.substitutions.mutationType == m2) == 1);
+      if(fixed){
+        cat("FIXED - SUCCESSFUL RUN\n");
+      } else{
+        cat("LOST – RESTARTING\n");
+        sim.readFromPopulationFile("tmp/slim_" + simID + ".txt");
+        setSeed(getSeed() + 1);
+      }
+    }
+  }
+
+  if(sim.generation==18549){
+    mut = sim.mutationsOfType(m2);
+    if(sim.mutationFrequencies(p2,mut)>0.99){
+      cat("Mutation freq >0.99: " + sim.mutationFrequencies(p2,mut) + "\n");
+    } else {
+      cat("NOT FIXED - RESTARTING\n");
+      sim.readFromPopulationFile("tmp/slim_" + simID + ".txt");
+      setSeed(getSeed() + 1);
+    }
+  }
+}
+
+18550 late(){
+  cat("./discoal 48 1 50000\n");
+  cat("1 1\n");
+  cat("\n//\n");
+  g_1 = sample(p2.genomes,24,F);
+  g_2 = sample(p3.genomes,24,F);
+  g_12=c(g_1,g_2);
+  m = sortBy(unique(g_12.mutations),"position");
+  positions = format("%.6f", m.position / sim.chromosome.lastPosition);
+  cat("segsites: " + size(m) + "\n");
+  cat("positions: "+ paste(positions," ") + "\n");
+  for (genome in g_12){
+    hasMuts = (match(m,genome.mutations) >=0);
+    cat(paste(asInteger(hasMuts),"") + "\n");
+  }
+  sim.simulationFinished();
+}

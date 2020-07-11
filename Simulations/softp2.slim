@@ -1,0 +1,90 @@
+initialize(){
+  initializeMutationRate(mu);
+  initializeMutationType("m1", 0.5, "f", 0.0);
+  initializeGenomicElementType("g1", m1, 1.0);
+  initializeGenomicElement(g1, 0, 49999);
+  initializeRecombinationRate(rho);
+  defineConstant("gen_num", asInteger(runif(1, 18400, 18450)));
+  defineConstant("popsize1", asInteger(runif(1, 1100, 2000)));
+  defineConstant("popsize2", asInteger(runif(1, 1100, 2000)));
+}
+
+1 late(){
+  sim.readFromPopulationFile("tmp/slim_" + simID + ".txt");
+}
+
+18121 late(){
+  sim.addSubpopSplit("p2", popsize1, p1);
+  sim.addSubpopSplit("p3", popsize2, p1);
+}
+
+18121:18550 late(){
+  if(gen_num==sim.generation){
+    muts = sim.mutations;
+    muts = muts[which(sim.mutationFrequencies(p2, muts) >= 0.01 & sim.mutationFrequencies(p2, muts) <= 0.1 & sim.mutationFrequencies(p3, muts) == 0.0)];
+    if(run==1){
+      muts = muts[setIntersection(which(muts.position>=0), which(muts.position<10000))];
+    }else if(run==2){
+      muts = muts[setIntersection(which(muts.position>=10000), which(muts.position<20000))];
+    }else if(run==3){
+      muts = muts[setIntersection(which(muts.position>=20000), which(muts.position<30000))];
+    }else if(run==4){
+      muts = muts[setIntersection(which(muts.position>=30000), which(muts.position<40000))];
+    }else if(run==5){
+      muts = muts[setIntersection(which(muts.position>=40000), which(muts.position<=49999))];
+    }
+    cat("size of mutation vector: " + size(muts) + "\n");
+    if(size(muts)){
+      mut = sample(muts, 1);
+      cat("mutation freq of p2: " + sim.mutationFrequencies(p2,mut) + "\n");
+      cat("mutation freq of p3: " + sim.mutationFrequencies(p3,mut) + "\n");
+      sel_coef = runif(1, 0.75, 5);
+      cat("sel_coef: " + sel_coef + "\n");
+      mut.setSelectionCoeff(sel_coef);
+    } else{
+      cat("No contender of sufficient frequency found.\n");
+      sim.readFromPopulationFile("tmp/slim_" + simID + ".txt");
+      setSeed(getSeed() + 1);
+    }
+  }
+  
+  if(sim.generation>=gen_num){
+    if(sum(sim.mutations.selectionCoeff) == 0.0){
+      if(sum(sim.substitutions.selectionCoeff) == 0.0){
+        cat("Sweep mutation lost in gen. " + sim.generation + "\n");
+        sim.readFromPopulationFile("tmp/slim_" + simID + ".txt");
+        setSeed(getSeed() + 1);
+      } else{
+        cat("Sweep mutation reached fixation.\n");
+      }
+    }
+  }
+
+  if(sim.generation==18549){
+    if(sim.mutationFrequencies(p2, sim.mutations[which(sim.mutations.selectionCoeff>0)])>0.99){
+      cat("Mutation freq >0.99: " + sim.mutationFrequencies(p2, sim.mutations[which(sim.mutations.selectionCoeff>0)]) + "\n");
+    } else{
+      cat("NOT FIXED - RESTARTING\n");
+      sim.readFromPopulationFile("tmp/slim_" + simID + ".txt");
+      setSeed(getSeed() + 1);
+    }
+  }  
+}
+
+18550 late(){
+  cat("./discoal 48 1 50000\n");
+  cat("1 1\n");
+  cat("\n//\n");
+  g_1 = sample(p2.genomes,24,F);
+  g_2 = sample(p3.genomes,24,F);
+  g_12=c(g_1,g_2);
+  m = sortBy(unique(g_12.mutations),"position");
+  positions = format("%.6f", m.position / sim.chromosome.lastPosition);
+  cat("segsites: " + size(m) + "\n");
+  cat("positions: "+ paste(positions," ") + "\n");
+  for (genome in g_12){
+    hasMuts = (match(m,genome.mutations) >=0);
+    cat(paste(asInteger(hasMuts),"") + "\n");
+  }
+  sim.simulationFinished();
+}
