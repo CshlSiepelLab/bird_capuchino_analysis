@@ -1,0 +1,36 @@
+initialize(){
+  initializeMutationRate(mu);
+  initializeMutationType("m1", 0.5, "f", 0.0);
+  initializeGenomicElementType("g1", m1, 1.0);
+  initializeGenomicElement(g1, 0, 49999);
+  initializeRecombinationRate(rho);
+  defineConstant("popsize1", asInteger(runif(1, 1100, 2000)));
+  defineConstant("popsize2", asInteger(runif(1, 1100, 2000)));
+}
+
+1 late(){
+  sim.readFromPopulationFile("tmp/slim_" + simID + ".txt");
+}
+
+18121 late(){
+  sim.addSubpopSplit("p2", popsize1, p1);
+  sim.addSubpopSplit("p3", popsize2, p1);
+}
+
+18550 late(){
+  cat("./discoal 48 1 50000\n");
+  cat("1 1\n");
+  cat("\n//\n");
+  g_1 = sample(p2.genomes,24,F);
+  g_2 = sample(p3.genomes,24,F);
+  g_12=c(g_1,g_2);
+  m = sortBy(unique(g_12.mutations),"position");
+  positions = format("%.6f", m.position / sim.chromosome.lastPosition);
+  cat("segsites: " + size(m) + "\n");
+  cat("positions: "+ paste(positions," ") + "\n");
+  for (genome in g_12){
+    hasMuts = (match(m,genome.mutations) >=0);
+    cat(paste(asInteger(hasMuts),"") + "\n");
+  }
+  sim.simulationFinished();
+}
