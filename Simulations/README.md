@@ -6,11 +6,9 @@ This directory contains simulation scripts for reproducing the analysis in the p
 <h4>Scripts:</h4>
 1. neutral.slim: neutral simulations for the pairwise experiments <br />
 2. neutral_expanded_analysis.slim: neutral simulation for the expanded analysis <br />
-3. softp2.slim: soft sweep simulations in species #1 for the pairwise experiments<br />
-4. softp3.slim soft sweep simulations in species #2 for the pairwise experiments<br />
-5. soft&lthypox or mel or nig or pil or pal&gt.slim: species-specific soft sweep simulations for the expanded analysis <br />
-6. hardp2.slim: hard sweep simulations in species #1 for the pairwise experiments<br />
-7. hardp3.slim: hard sweep simulations in species #2 for the pairwise experiments<br />
-8. ancestral.slim: ancestral soft sweep simulations for the pairwise experiments<br />
-9. partialp2.slim or partialp3.slim: partial soft sweep simulations in species #1 or #2 for the pairwise experiments<br />
-10. ancestral_pop.slim: simulations for the ancestral population
+3. softp2.slim or softp3.slim: soft sweep simulations in species #1 or #2 for the pairwise experiments<br />
+4. soft_&lthypox or mel or nig or pil or pal&gt.slim: species-specific soft sweep simulations for the expanded analysis <br />
+5. hardp2.slim or hardp3.slim: hard sweep simulations in species #1 or #2 for the pairwise experiments<br />
+6. ancestral.slim: ancestral soft sweep simulations for the pairwise experiments<br />
+7. partialp2.slim or partialp3.slim: partial soft sweep simulations in species #1 or #2 for the pairwise experiments<br />
+8. ancestral_pop.slim: simulations for the ancestral population
