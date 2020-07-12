@@ -5,7 +5,7 @@ This directory contains analysis and plotting scripts for reproducing the analys
 2. combineWinsIntoFeatureVec.py - https://github.com/kr-colab/shIC <br />
 3. niceStats - https://github.com/kr-colab/shIC <br />
 
-<h4>Example run of pipelines:</h4>
+<h4>Example run of pipeline:</h4>
 Let's assume you've run hard sweep simulations (hardp2.slim; 10,000 replicates) in species #1  and stored the output in directory hardp2. You can run the pipeline using the following command: sh pipeline.sh hard 10000 hardp2 1 5 48. The arguments are: type of simulation = hard; number of replicates = 10,000; directory = hardp2; id = 1 (or any random integer); number of windows = 5; sample size = 48.
 
 <h4>References:</h4>
