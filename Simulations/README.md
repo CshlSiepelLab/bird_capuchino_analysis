@@ -11,4 +11,5 @@ This directory contains simulation scripts for reproducing the analysis in the p
 5. hardp2.slim or hardp3.slim: hard sweep simulations in species #1 or #2 for the pairwise experiments<br />
 6. ancestral.slim: ancestral soft sweep simulations for the pairwise experiments<br />
 7. partialp2.slim or partialp3.slim: partial soft sweep simulations in species #1 or #2 for the pairwise experiments<br />
-8. ancestral_pop.slim: simulations for the ancestral population
+8. ancestral_pop.slim: simulations for the ancestral population <br />
+9. parallel.slim: parallel soft sweep simulations for the pairwise experiments<br />
