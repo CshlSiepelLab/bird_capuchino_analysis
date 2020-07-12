@@ -1,0 +1,9 @@
+#$ -N region
+#$ -l m_mem_free=4G
+
+path=$7
+cd $path
+
+echo "Start"
+python local_LD.py $1 $2 $3 $4 $5 $6
+echo "Done"
