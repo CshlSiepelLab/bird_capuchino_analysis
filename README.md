@@ -10,8 +10,8 @@ Some details, such as where data was downloaded or how filtering was done, are d
 
 <h4>Directories:</h4>
 1. Simulations/ Contains all script for simulations. <br />
-2. Scripts/ Contains some miscellaneous scripts.
-
+2. ML_analysis/ Contains some miscellaneous scripts.
+3. ARG_analysis/ Contains ARG-related analysis
 <h4>References:</h4>
 [1] Rasmussen, Matthew D., et al. "Genome-wide inference of ancestral recombination graphs." PLoS Genet 10.5 (2014): e1004342. <br />
 [2] Haller, Benjamin C., and Philipp W. Messer. "SLiM 2: Flexible, interactive forward genetic simulations." Molecular biology and evolution 34.1 (2017): 230-240.
