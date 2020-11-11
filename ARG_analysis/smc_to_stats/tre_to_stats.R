@@ -60,7 +60,7 @@ statsFile <- sub(".*/Contig", "Contig", treeFile)
 statsFile <- sub("\\.tre(\\.gz)?$", ".stats", statsFile)
 statsFile <- paste(statsDir,statsFile,sep="/")
 dir.create(statsDir,showWarnings=FALSE)
-res <- file.create(statsFile,force=TRUE)
+res <- file.create(statsFile)
 ############################################################################
 
 ############################################################################

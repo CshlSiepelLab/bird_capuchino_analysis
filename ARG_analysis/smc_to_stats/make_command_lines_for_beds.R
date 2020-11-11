@@ -33,10 +33,10 @@ smc_dir     <- # <-- SET SOURCE DIR CONTAINING SMC FILES
 log_dir     <- # <-- SET SOURCE DIR CONTAINING LOG FILES
 out_dir     <- "./argBedFiles"
 
-# script parameters:
+# script parameters: <-- SET THESE UP BASED ON YOUR DESIRED FIlTERING / WINDOWING STRATEGY
 numJobs        <- 20         # num jobs to run in parallel
 mcmc_iter      <- 1000       # MCMC iteration for filtering
-min_block_len  <- 100000     # minimum scaffold length for filtering
+min_block_len  <- 120000     # minimum scaffold length for filtering
 
 
 # the input file:

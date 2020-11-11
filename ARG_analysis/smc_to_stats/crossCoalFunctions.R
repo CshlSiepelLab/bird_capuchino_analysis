@@ -25,7 +25,7 @@ if(interactive()) {
 
 ############################################################################
 # load functions
-source(paste(script_dir,"../smc_to_stats/treeStatFunctions.R",sep="/"))
+source(paste(script_dir,"treeStatFunctions.R",sep="/"))
 
 
 ###########################################################################################

@@ -26,7 +26,7 @@ script_path <- paste(script_dir,"bed_to_tre.R",sep="/");
 bed_dir     <- "./argBedFiles"
 tree_dir    <- "./argTreeFiles"
 
-# script parameters:
+# script parameters: <-- SET THESE, IF NEEDED
 skipInd     <- 500        # interval between sampled trees
 numJobs     <- 20         # num jobs to run in parallel
 
@@ -44,7 +44,7 @@ lines <- lines[which(lines$blockLen>0),]
 write("#!/bin/bash", file = outFile, append=FALSE)
 
 for (i in  1:nrow(lines)){ 
-  command <-sprintf("Rscript %s %s %s %s %s %s %s &", script_path, lines[i,"file"], tree_dir, lines[i,"startInd"], lines[i,"endInd"], skipInd, option)
+  command <-sprintf("Rscript %s %s %s %s %s %s &", script_path, lines[i,"file"], tree_dir, lines[i,"startInd"], lines[i,"endInd"], skipInd)
   write(command, file=outFile , append = TRUE)
   if (i %% numJobs == 0){
     # the "wait" means it waits until all previous commands are finished and then moves to the next command.

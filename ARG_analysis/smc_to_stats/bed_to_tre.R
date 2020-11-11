@@ -16,7 +16,6 @@ outDir    = args[2] # out dir where all tree files are put
 startInd  = args[3] # start index
 endInd    = args[4] # end index
 skipInd   = args[5] # skips between sampled trees
-option    = args[6] # "new" for new version with single call to tabix
 ################################################################
 
 

@@ -16,12 +16,11 @@ inputFile <- paste(sep="/", workDir,"ARGblock-coordinates.txt")
 outFile   <- paste(sep="/", workDir,"ARGblock-coordinates-trimmed.txt")
 infoFile  <- paste(sep="/", workDir,"ARGblock-coordinates-info.txt")
 lines     <- read.table(inputFile)
-# script parameters:
+# script parameters:   <-- SET THESE UP BASED ON YOUR DESIRED FIlTERING / WINDOWING STRATEGY
 mcmc_iter      <- 1000
-min_block_len  <- 100000
+min_block_len  <- 120000
 segment_len    <- 20000
 trim_len       <- 50000
-
 
 divideBlocksToRegionsBySegments <- function (args_df, trim_len, segment_len){
   ## input: df with regions data on all args in the scaffold

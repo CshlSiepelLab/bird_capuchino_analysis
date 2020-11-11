@@ -143,7 +143,8 @@ if(compute_control_scaffold_stats) {
    numVals   <- round(nrow(control_scaffold_table) * printingTail, digits=0)
    ind_pval  <- round(nrow(control_scaffold_table) * pvalue_stats - 0.5, digits=0)
    stats_enrich     <- grep("_enrich$",colnames(stat_df),value=TRUE)
-   pop_RTH  <- grep("_RTH$",colnames(stat_df),value=TRUE)
+   stats_RTH <- grep("_RTH$",colnames(stat_df),value=TRUE)
+   stats_RT  <- c(stats_RTH,"RT12")
    cat("Summary for ",nrow(control_scaffold_table)," control windows in non-FST scaffolds:\n",file=control_summary_file)
    thresholds <- c()
    for(stat in stats_enrich) {

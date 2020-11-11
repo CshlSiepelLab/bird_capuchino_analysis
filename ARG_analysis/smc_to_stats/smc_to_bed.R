@@ -17,6 +17,7 @@ iter_jumps  = args[4]  # can take multiplications of 10
 smc_dir     = args[5]  # <-- SOURCE DIR CONTAINING SMC FILES (this is set in make-command_lines_for_beds.R)
 log_dir     = args[6]  # <-- SOURCE DIR CONTAINING LOG FILES (this is set in make-command_lines_for_beds.R)
 out_dir     = args[7]  # ./argBedFiles
+smc2bed_path = "smc2bed" # <-- SET ALTERNATIVE PATH TO SMC2BED IN CASE PROGRAM IS NOT IN DEFAULT BIN PATH
 log_file  = sprintf("%s/%s_out.log", log_dir , arg_block)
 #########################################################################################################
 
@@ -35,7 +36,7 @@ for(iter in iterations) {
   out_bed_file = sprintf("%s/%s_out.%s.bed.gz", out_dir,arg_block, iter)
   cat("Creating bed file",out_bed_file,"\n")
   # make bed file
-  system(sprintf("smc2bed --log-file %s %s | bgzip > %s", log_file ,smc_file, out_bed_file)) # <-- MAY NEED TO SET PATH TO SMC2BED
+  system(sprintf("%s --log-file %s %s | bgzip > %s", smc2bed_path, log_file ,smc_file, out_bed_file))
   # make .tbi index file
   system(sprintf("tabix %s", out_bed_file))
 

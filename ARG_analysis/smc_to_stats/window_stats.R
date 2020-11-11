@@ -17,8 +17,8 @@ window_len  <- as.numeric(args[3])
 outDir       <- args[4]
 infoFile     <- args[5]
 # rounding parameter
-ageDigits    <- 0   # keep integer value
-enrichDigits <- 2   # keep 2 decimal digits in enrichment score
+ageDigits    <- 3   # keep 3 decimal digits in all age-based scores
+enrichDigits <- 2   # keep 2 decimal digits in enrichment scores
 ############################################################################
 
 ############################################################################
@@ -43,10 +43,10 @@ arg_block_table           <- arg_block_table[order(arg_block_table$startPos),]
 # (replacing first two columns with (chrom startPos endPos)
 outFile        <- paste(outDir,"/",scaffold,".stat.bed",sep="")
 dir.create(outDir,showWarnings=FALSE)
-res <- file.create(outFile,force=TRUE)
+res <- file.create(outFile)
 treeStats      <- read.table(arg_block_table$file[1],quote="",header=TRUE)
 stat_list      <- colnames(treeStats)[-(1:2)]
-age_stats      <- c("TMRCA_all", "RT12", stat_list[grep("RTH$",stat_list)])
+age_stats      <- c("TMRCAH_all", "RT12", stat_list[grep("RTH$",stat_list)])
 enrich_stats   <- stat_list[grep("_enrich$",stat_list)]
 window_stats <- c("chrom", "startPos", "endPos", stat_list)
 write.table(t(window_stats), file=outFile, sep="\t", quote=FALSE, row.names=FALSE, col.names=FALSE, append=FALSE)

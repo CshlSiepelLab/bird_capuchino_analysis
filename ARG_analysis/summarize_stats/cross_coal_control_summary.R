@@ -3,8 +3,8 @@
 
 ############################################################################
 # set these
-inFile   <- "crossCoals/cross_coals_control_v4.tsv"   # file with quantile differences summarized in all control blocks
-pvalue   <- 0.01                                    # significance threthols
+inFile   <- "infoTables/cross_coals_control_blocks.tsv"  # <-- SET THIS TO OUTPUT OF CROSS COAL ANALYSIS OF CONTROL REGIONS
+pvalue   <- 0.01                                         # <-- SET SIGNIFICANCE THRESHOLD
 ############################################################################
 
 ccTable     <- read.table(inFile,header=TRUE)
